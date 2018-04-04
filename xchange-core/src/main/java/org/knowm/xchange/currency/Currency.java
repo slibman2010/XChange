@@ -10,34 +10,32 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * A Currency class roughly modeled after {@link java.util.Currency}. Each object retains the code
- * it was acquired with -- so {@link #getInstance}("BTC").{@link #getCurrencyCode}() will always be
- * "BTC", even though the proposed ISO 4217 code is "XBT"
+ * A Currency class roughly modeled after {@link java.util.Currency}.
+ * </p>
+ * Each object retains the code it was acquired with -- so {@link #getInstance}("BTC").{@link #getCurrencyCode}() will always be "BTC", even though
+ * the proposed ISO 4217 code is "XBT"
  */
 public class Currency implements Comparable<Currency>, Serializable {
 
   private static final Map<String, Currency> currencies = new HashMap<>();
 
-  /** Global currency codes */
+  /**
+   * Global currency codes
+   */
   // TODO: Load from json resource
   public static final Currency AED = createCurrency("AED", "United Arab Emirates Dirham", null);
-
   public static final Currency AFN = createCurrency("AFN", "Afghan Afghani", null);
   public static final Currency ALL = createCurrency("ALL", "Albanian Lek", null);
   public static final Currency AMD = createCurrency("AMD", "Armenian Dram", null);
   public static final Currency ANC = createCurrency("ANC", "Anoncoin", null);
   public static final Currency ANG = createCurrency("ANG", "Netherlands Antillean Guilder", null);
   public static final Currency AOA = createCurrency("AOA", "Angolan Kwanza", null);
-  public static final Currency ARN = createCurrency("ARN", "Aeron", null);
   public static final Currency ARS = createCurrency("ARS", "Argentine Peso", null);
   public static final Currency AUD = createCurrency("AUD", "Australian Dollar", null);
   public static final Currency AUR = createCurrency("AUR", "Auroracoin", null);
-  public static final Currency AVT = createCurrency("AVT", "Aventus", null);
   public static final Currency AWG = createCurrency("AWG", "Aruban Florin", null);
   public static final Currency AZN = createCurrency("AZN", "Azerbaijani Manat", null);
-  public static final Currency BAM =
-      createCurrency("BAM", "Bosnia-Herzegovina Convertible Mark", null);
-  public static final Currency BAT = createCurrency("BAT", "Basic Attention Token", null);
+  public static final Currency BAM = createCurrency("BAM", "Bosnia-Herzegovina Convertible Mark", null);
   public static final Currency BBD = createCurrency("BBD", "Barbadian Dollar", null);
   public static final Currency BC = createCurrency("BC", "BlackCoin", null, "BLK");
   public static final Currency BCC = createCurrency("BCC", "BitConnect", null);
@@ -54,7 +52,6 @@ public class Currency implements Comparable<Currency>, Serializable {
   public static final Currency BRL = createCurrency("BRL", "Brazilian Real", "R$");
   public static final Currency BSD = createCurrency("BSD", "Bahamian Dollar", null);
   public static final Currency BTC = createCurrency("BTC", "Bitcoin", null, "XBT");
-  public static final Currency BTG = createCurrency("BTG", "Bitcoin Gold", null);
   public static final Currency XBT = getInstance("XBT");
   public static final Currency BTN = createCurrency("BTN", "Bhutanese Ngultrum", null);
   public static final Currency BWP = createCurrency("BWP", "Botswanan Pula", null);
@@ -73,7 +70,6 @@ public class Currency implements Comparable<Currency>, Serializable {
   public static final Currency CVE = createCurrency("CVE", "Cape Verdean Escudo", null);
   public static final Currency CZK = createCurrency("CZK", "Czech Republic Koruna", null);
   public static final Currency DASH = createCurrency("DASH", "Dash", null);
-  public static final Currency DCR = createCurrency("DCR", "Decred", null);
   public static final Currency DGB = createCurrency("DGB", "DigiByte", null);
   public static final Currency DJF = createCurrency("DJF", "Djiboutian Franc", null);
   public static final Currency DKK = createCurrency("DKK", "Danish Krone", null);
@@ -85,7 +81,6 @@ public class Currency implements Comparable<Currency>, Serializable {
   public static final Currency DVC = createCurrency("DVC", "Devcoin", null);
   public static final Currency DRK = createCurrency("DRK", "Darkcoin", null);
   public static final Currency DZD = createCurrency("DZD", "Algerian Dinar", null);
-  public static final Currency EDO = createCurrency("EDO", "Eidoo", null);
   public static final Currency EEK = createCurrency("EEK", "Estonian Kroon", null);
   public static final Currency EGD = createCurrency("EGD", "egoldcoin", null);
   public static final Currency EGP = createCurrency("EGP", "Egyptian Pound", null);
@@ -95,7 +90,6 @@ public class Currency implements Comparable<Currency>, Serializable {
   public static final Currency ETH = createCurrency("ETH", "Ether", null);
   public static final Currency EUR = createCurrency("EUR", "Euro", null);
   public static final Currency FJD = createCurrency("FJD", "Fijian Dollar", null);
-  public static final Currency _1ST = createCurrency("1ST", "First Blood", null);
   public static final Currency FKP = createCurrency("FKP", "Falkland Islands Pound", null);
   public static final Currency FTC = createCurrency("FTC", "Feathercoin", null);
   public static final Currency GBP = createCurrency("GBP", "British Pound Sterling", null);
@@ -106,11 +100,9 @@ public class Currency implements Comparable<Currency>, Serializable {
   public static final Currency GMD = createCurrency("GMD", "Gambian Dalasi", null);
   public static final Currency GNF = createCurrency("GNF", "Guinean Franc", null);
   public static final Currency GNO = createCurrency("GNO", "Gnosis", null);
-  public static final Currency GNT = createCurrency("GNT", "Golem", null);
   public static final Currency GTQ = createCurrency("GTQ", "Guatemalan Quetzal", null);
   public static final Currency GYD = createCurrency("GYD", "Guyanaese Dollar", null);
   public static final Currency HKD = createCurrency("HKD", "Hong Kong Dollar", null);
-  public static final Currency HVN = createCurrency("HVN", "Hive", null);
   public static final Currency HNL = createCurrency("HNL", "Honduran Lempira", null);
   public static final Currency HRK = createCurrency("HRK", "Croatian Kuna", null);
   public static final Currency HTG = createCurrency("HTG", "Haitian Gourde", null);
@@ -132,7 +124,6 @@ public class Currency implements Comparable<Currency>, Serializable {
   public static final Currency KES = createCurrency("KES", "Kenyan Shilling", null);
   public static final Currency KGS = createCurrency("KGS", "Kyrgystani Som", null);
   public static final Currency KHR = createCurrency("KHR", "Cambodian Riel", null);
-  public static final Currency KICK = createCurrency("KICK", "KickCoin", null);
   public static final Currency KMF = createCurrency("KMF", "Comorian Franc", null);
   public static final Currency KPW = createCurrency("KPW", "North Korean Won", null);
   public static final Currency KRW = createCurrency("KRW", "South Korean Won", null);
@@ -141,7 +132,6 @@ public class Currency implements Comparable<Currency>, Serializable {
   public static final Currency KZT = createCurrency("KZT", "Kazakhstani Tenge", null);
   public static final Currency LAK = createCurrency("LAK", "Laotian Kip", null);
   public static final Currency LBP = createCurrency("LBP", "Lebanese Pound", null);
-  public static final Currency LSK = createCurrency("LSK", "Lisk", null);
   public static final Currency LKR = createCurrency("LKR", "Sri Lankan Rupee", null);
   public static final Currency LRD = createCurrency("LRD", "Liberian Dollar", null);
   public static final Currency LSL = createCurrency("LSL", "Lesotho Loti", null);
@@ -200,7 +190,6 @@ public class Currency implements Comparable<Currency>, Serializable {
   public static final Currency SAR = createCurrency("SAR", "Saudi Riyal", null);
   public static final Currency SBC = createCurrency("SBC", "Stablecoin", null);
   public static final Currency SBD = createCurrency("SBD", "Solomon Islands Dollar", null);
-  public static final Currency SC = createCurrency("SC", "Siacoin", null);
   public static final Currency SCR = createCurrency("SCR", "Seychellois Rupee", null);
   public static final Currency SDG = createCurrency("SDG", "Sudanese Pound", null);
   public static final Currency SEK = createCurrency("SEK", "Swedish Krona", null);
@@ -210,10 +199,8 @@ public class Currency implements Comparable<Currency>, Serializable {
   public static final Currency SOS = createCurrency("SOS", "Somali Shilling", null);
   public static final Currency SRD = createCurrency("SRD", "Surinamese Dollar", null);
   public static final Currency START = createCurrency("START", "startcoin", null);
-  public static final Currency STEEM = createCurrency("STEEM", "Steem", null);
   public static final Currency STD = createCurrency("STD", "São Tomé and Príncipe Dobra", null);
   public static final Currency STR = createCurrency("STR", "Stellar", null);
-  public static final Currency STRAT = createCurrency("STRAT", "Stratis", null);
   public static final Currency SVC = createCurrency("SVC", "Salvadoran Colón", null);
   public static final Currency SYP = createCurrency("SYP", "Syrian Pound", null);
   public static final Currency SZL = createCurrency("SZL", "Swazi Lilangeni", null);
@@ -238,20 +225,16 @@ public class Currency implements Comparable<Currency>, Serializable {
   public static final Currency VEF = createCurrency("VEF", "Venezuelan Bolívar", null);
   public static final Currency VEN = createCurrency("VEN", "Hub Culture's Ven", null, "XVN");
   public static final Currency XVN = getInstance("XVN");
-  public static final Currency VIB = createCurrency("VIB", "Viberate", null);
   public static final Currency VND = createCurrency("VND", "Vietnamese Dong", null);
   public static final Currency VUV = createCurrency("VUV", "Vanuatu Vatu", null);
   public static final Currency WDC = createCurrency("WDC", "WorldCoin", null);
   public static final Currency WST = createCurrency("WST", "Samoan Tala", null);
   public static final Currency XAF = createCurrency("XAF", "CFA Franc BEAC", null);
-  public static final Currency XAS = createCurrency("XAS", "Asch", null);
   public static final Currency XAUR = createCurrency("XAUR", "Xaurum", null);
   public static final Currency XCD = createCurrency("XCD", "East Caribbean Dollar", null);
   public static final Currency XDR = createCurrency("XDR", "Special Drawing Rights", null);
-  public static final Currency XEM = createCurrency("XEM", "NEM", null);
   public static final Currency XLM = createCurrency("XLM", "Stellar Lumen", null);
   public static final Currency XMR = createCurrency("XMR", "Monero", null);
-  public static final Currency XRB = createCurrency("XRB", "Rai Blocks", null);
   public static final Currency XOF = createCurrency("XOF", "CFA Franc BCEAO", null);
   public static final Currency XPF = createCurrency("XPF", "CFP Franc", null);
   public static final Currency XPM = createCurrency("XPM", "Primecoin", null);
@@ -264,58 +247,28 @@ public class Currency implements Comparable<Currency>, Serializable {
   public static final Currency ZRC = createCurrency("ZRC", "ziftrCOIN", null);
   public static final Currency ZWL = createCurrency("ZWL", "Zimbabwean Dollar", null);
 
-  // Bitmex futures settlement dates
-  public static final Currency H18 = createCurrency("H18", "March 30th, 2018", null);
-  public static final Currency M18 = createCurrency("M18", "June 30th, 2018", null);
-
-  // Cryptos
-  public static final Currency BNB = createCurrency("BNB", "Binance Coin", null);
-  public static final Currency QSP = createCurrency("QSP", "Quantstamp", null);
-  public static final Currency IOTA = createCurrency("IOTA", "Iota", null);
-  public static final Currency YOYO = createCurrency("YOYO", "Yoyow", null);
-  public static final Currency BTS = createCurrency("BTS", "Bitshare", null);
-  public static final Currency ICX = createCurrency("ICX", "Icon", null);
-  public static final Currency MCO = createCurrency("MCO", "Monaco", null);
-  public static final Currency CND = createCurrency("CND", "Cindicator", null);
-  public static final Currency XVG = createCurrency("XVG", "Verge", null);
-  public static final Currency POE = createCurrency("POE", "Po.et", null);
-  public static final Currency TRX = createCurrency("TRX", "Tron", null);
-  public static final Currency ADA = createCurrency("ADA", "Cardano", null);
-  public static final Currency FUN = createCurrency("FUN", "FunFair", null);
-  public static final Currency HSR = createCurrency("HSR", "Hshare", null);
-  public static final Currency LEND = createCurrency("LEND", "ETHLend", null);
-  public static final Currency ELF = createCurrency("ELF", "aelf", null);
-  public static final Currency STORJ = createCurrency("STORJ", "Storj", null);
-  public static final Currency MOD = createCurrency("MOD", "Modum", null);
-  private final String code;
-  private final CurrencyAttributes attributes;
-
-  /** Public constructor. Links to an existing currency. */
-  public Currency(String code) {
-
-    this.code = code;
-    this.attributes = getInstance(code).attributes;
-  }
-
-  private Currency(String alternativeCode, CurrencyAttributes attributes) {
-
-    this.code = alternativeCode;
-    this.attributes = attributes;
-  }
-
-  /** Gets the set of available currencies. */
+  /**
+   * Gets the set of available currencies.
+   */
   public static SortedSet<Currency> getAvailableCurrencies() {
 
     return new TreeSet<>(currencies.values());
   }
 
-  /** Gets the set of available currency codes. */
+  /**
+   * Gets the set of available currency codes.
+   */
   public static SortedSet<String> getAvailableCurrencyCodes() {
 
     return new TreeSet<>(currencies.keySet());
   }
 
-  /** Returns a Currency instance for the given currency code. */
+  private final String code;
+  private final CurrencyAttributes attributes;
+
+  /**
+   * Returns a Currency instance for the given currency code.
+   */
   public static Currency getInstance(String currencyCode) {
 
     Currency currency = getInstanceNoCreate(currencyCode.toUpperCase());
@@ -327,10 +280,99 @@ public class Currency implements Comparable<Currency>, Serializable {
     }
   }
 
-  /** Returns the Currency instance for the given currency code only if one already exists. */
+  /**
+   * Returns the Currency instance for the given currency code only if one already exists.
+   */
   public static Currency getInstanceNoCreate(String currencyCode) {
 
     return currencies.get(currencyCode.toUpperCase());
+  }
+
+  /**
+   * Public constructor. Links to an existing currency.
+   */
+  public Currency(String code) {
+
+    this.code = code;
+    this.attributes = getInstance(code).attributes;
+  }
+
+  /**
+   * Gets the currency code originally used to acquire this object.
+   */
+  public String getCurrencyCode() {
+
+    return code;
+  }
+
+  /**
+   * Gets the equivalent object with the passed code.
+   * <p/>
+   * This is useful in case some currencies share codes, such that {@link #getInstance(String)} may return the wrong currency.
+   *
+   * @param code The code the returned object will evaluate to
+   * @return A Currency representing the same currency but having the passed currency code
+   * @throws IllegalArgumentException if the passed code is not listed for this currency
+   */
+  public Currency getCodeCurrency(String code) {
+
+    if (code.equals(this.code))
+      return this;
+
+    Currency currency = getInstance(code);
+    if (currency.equals(this))
+      return currency;
+
+    if (!attributes.codes.contains(code))
+      throw new IllegalArgumentException("Code not listed for this currency");
+
+    return new Currency(code, attributes);
+  }
+
+  /**
+   * Gets the equivalent object with an ISO 4217 code, or if none a code which looks ISO compatible (starts with an X), or the constructed currency
+   * code if neither exist.
+   */
+  public Currency getIso4217Currency() {
+
+    if (attributes.isoCode == null)
+      return this;
+
+    // The logic for setting isoCode is in CurrencyAttributes
+
+    return getCodeCurrency(attributes.isoCode);
+  }
+
+  /**
+   * Gets the equivalent object that was created with the "commonly used" code.
+   */
+  public Currency getCommonlyUsedCurrency() {
+
+    return getCodeCurrency(attributes.commonCode);
+  }
+
+  /**
+   * Gets the set of all currency codes associated with this currency.
+   */
+  public Set<String> getCurrencyCodes() {
+
+    return attributes.codes;
+  }
+
+  /**
+   * Gets the unicode symbol of this currency.
+   */
+  public String getSymbol() {
+
+    return attributes.unicode;
+  }
+
+  /**
+   * Gets the name that is suitable for displaying this currency.
+   */
+  public String getDisplayName() {
+
+    return attributes.name;
   }
 
   /**
@@ -341,11 +383,9 @@ public class Currency implements Comparable<Currency>, Serializable {
    * @param unicode Unicode symbol for the currency: "\u20BF" or "฿"
    * @param alternativeCodes Alternative codes for the currency: "XBT"
    */
-  private static Currency createCurrency(
-      String commonCode, String name, String unicode, String... alternativeCodes) {
+  private static Currency createCurrency(String commonCode, String name, String unicode, String... alternativeCodes) {
 
-    CurrencyAttributes attributes =
-        new CurrencyAttributes(commonCode, name, unicode, alternativeCodes);
+    CurrencyAttributes attributes = new CurrencyAttributes(commonCode, name, unicode, alternativeCodes);
 
     Currency currency = new Currency(commonCode, attributes);
 
@@ -365,70 +405,10 @@ public class Currency implements Comparable<Currency>, Serializable {
     return currency;
   }
 
-  /** Gets the currency code originally used to acquire this object. */
-  public String getCurrencyCode() {
+  private Currency(String alternativeCode, CurrencyAttributes attributes) {
 
-    return code;
-  }
-
-  /**
-   * Gets the equivalent object with the passed code.
-   *
-   * <p>This is useful in case some currencies share codes, such that {@link #getInstance(String)}
-   * may return the wrong currency.
-   *
-   * @param code The code the returned object will evaluate to
-   * @return A Currency representing the same currency but having the passed currency code
-   * @throws IllegalArgumentException if the passed code is not listed for this currency
-   */
-  public Currency getCodeCurrency(String code) {
-
-    if (code.equals(this.code)) return this;
-
-    Currency currency = getInstance(code);
-    if (currency.equals(this)) return currency;
-
-    if (!attributes.codes.contains(code))
-      throw new IllegalArgumentException("Code not listed for this currency");
-
-    return new Currency(code, attributes);
-  }
-
-  /**
-   * Gets the equivalent object with an ISO 4217 code, or if none a code which looks ISO compatible
-   * (starts with an X), or the constructed currency code if neither exist.
-   */
-  public Currency getIso4217Currency() {
-
-    if (attributes.isoCode == null) return this;
-
-    // The logic for setting isoCode is in CurrencyAttributes
-
-    return getCodeCurrency(attributes.isoCode);
-  }
-
-  /** Gets the equivalent object that was created with the "commonly used" code. */
-  public Currency getCommonlyUsedCurrency() {
-
-    return getCodeCurrency(attributes.commonCode);
-  }
-
-  /** Gets the set of all currency codes associated with this currency. */
-  public Set<String> getCurrencyCodes() {
-
-    return attributes.codes;
-  }
-
-  /** Gets the unicode symbol of this currency. */
-  public String getSymbol() {
-
-    return attributes.unicode;
-  }
-
-  /** Gets the name that is suitable for displaying this currency. */
-  public String getDisplayName() {
-
-    return attributes.name;
+    this.code = alternativeCode;
+    this.attributes = attributes;
   }
 
   @Override
@@ -457,17 +437,20 @@ public class Currency implements Comparable<Currency>, Serializable {
     }
     Currency other = (Currency) obj;
 
-    return attributes.equals(other.attributes);
+    return attributes == other.attributes;
   }
 
   @Override
   public int compareTo(Currency o) {
 
-    if (attributes.equals(o.attributes)) return 0;
+    if (attributes == o.attributes)
+      return 0;
 
     int comparison = code.compareTo(o.code);
-    if (comparison == 0) comparison = getDisplayName().compareTo(o.getDisplayName());
-    if (comparison == 0) comparison = hashCode() - o.hashCode();
+    if (comparison == 0)
+      comparison = getDisplayName().compareTo(o.getDisplayName());
+    if (comparison == 0)
+      comparison = hashCode() - o.hashCode();
     return comparison;
   }
 
@@ -479,8 +462,7 @@ public class Currency implements Comparable<Currency>, Serializable {
     public final String name;
     public final String unicode;
 
-    public CurrencyAttributes(
-        String commonCode, String name, String unicode, String... alternativeCodes) {
+    public CurrencyAttributes(String commonCode, String name, String unicode, String... alternativeCodes) {
 
       if (alternativeCodes.length > 0) {
         this.codes = new TreeSet<>(Arrays.asList(alternativeCodes));
@@ -527,23 +509,6 @@ public class Currency implements Comparable<Currency>, Serializable {
       } else {
         this.unicode = commonCode;
       }
-    }
-
-    @Override
-    public int hashCode() {
-      return commonCode.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      if (this == obj) return true;
-      if (obj == null) return false;
-      if (getClass() != obj.getClass()) return false;
-      CurrencyAttributes other = (CurrencyAttributes) obj;
-      if (commonCode == null) {
-        if (other.commonCode != null) return false;
-      } else if (!commonCode.equals(other.commonCode)) return false;
-      return true;
     }
   }
 }

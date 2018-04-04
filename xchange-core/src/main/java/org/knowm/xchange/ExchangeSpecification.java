@@ -4,40 +4,59 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * <p>
  * Specification to provide the following to {@link ExchangeFactory}:
- *
+ * </p>
  * <ul>
- *   <li>Provision of required exchangeSpecificParameters for creating an {@link Exchange}
- *   <li>Provision of optional exchangeSpecificParameters for additional configuration
+ * <li>Provision of required exchangeSpecificParameters for creating an {@link Exchange}</li>
+ * <li>Provision of optional exchangeSpecificParameters for additional configuration</li>
  * </ul>
  */
 public class ExchangeSpecification {
 
-  private final String exchangeClassName;
   private String exchangeName;
+
   private String exchangeDescription;
+
   private String userName;
+
   private String password;
+
   private String secretKey;
+
   private String apiKey;
+
   private String sslUri;
+
   private String plainTextUri;
+
   private String host;
+
   private int port = 80;
+
   private String proxyHost;
+
   private Integer proxyPort;
+
   private int httpConnTimeout = 0; // default rescu configuration will be used if value not changed
+
   private int httpReadTimeout = 0; // default rescu configuration will be used if value not changed
+
   private String metaDataJsonFileOverride = null;
+
   private boolean shouldLoadRemoteMetaData = true; // default value
-  /** arbitrary exchange params that can be set for unique cases */
+
+  private final String exchangeClassName;
+
+  /**
+   * arbitrary exchange params that can be set for unique cases
+   */
   private Map<String, Object> exchangeSpecificParameters = new HashMap<>();
 
   /**
    * Dynamic binding
    *
-   * @param exchangeClassName The exchange class name (e.g.
-   *     "org.knowm.xchange.mtgox.v1.MtGoxExchange")
+   * @param exchangeClassName The exchange class name (e.g. "org.knowm.xchange.mtgox.v1.MtGoxExchange")
    */
   public ExchangeSpecification(String exchangeClassName) {
 
@@ -54,17 +73,17 @@ public class ExchangeSpecification {
     this.exchangeClassName = exchangeClass.getCanonicalName();
   }
 
-  /** @return The exchange class name for loading at runtime */
+  /**
+   * @return The exchange class name for loading at runtime
+   */
   public String getExchangeClassName() {
 
     return exchangeClassName;
   }
 
   /**
-   * @param key The key into the parameter map (recommend using the provided standard static
-   *     entries)
-   * @return Any additional exchangeSpecificParameters that the {@link Exchange} may consume to
-   *     configure services
+   * @param key The key into the parameter map (recommend using the provided standard static entries)
+   * @return Any additional exchangeSpecificParameters that the {@link Exchange} may consume to configure services
    */
   public Object getParameter(String key) {
 
@@ -162,31 +181,8 @@ public class ExchangeSpecification {
   }
 
   /**
-   * Set the port number of the server providing direct socket data (e.g. "1337").
-   *
-   * @param port the port number
-   */
-  public void setPort(int port) {
-
-    this.port = port;
-  }
-
-  /**
-   * Get the http connection timeout for the connection. If the default value of zero is returned
-   * then the default rescu timeout will be applied. Check the exchange code to see if this option
-   * has been implemented.
-   *
-   * @return the http read timeout in milliseconds
-   */
-  public int getHttpConnTimeout() {
-
-    return httpConnTimeout;
-  }
-
-  /**
-   * Set the http connection timeout for the connection. If not supplied the default rescu timeout
-   * will be used. Check the exchange code to see if this option has been implemented. (This value
-   * can also be set globally in "rescu.properties" by setting the property
+   * Set the http connection timeout for the connection. If not supplied the default rescu timeout will be used. Check the exchange code to see if
+   * this option has been implemented.  (This value can also be set globally in "rescu.properties" by setting the property
    * "rescu.http.connTimeoutMillis".)
    *
    * @param milliseconds the http read timeout in milliseconds
@@ -197,21 +193,19 @@ public class ExchangeSpecification {
   }
 
   /**
-   * Get the http read timeout for the connection. If the default value of zero is returned then the
-   * default rescu timeout will be applied. Check the exchange code to see if this option has been
-   * implemented.
+   * Get the http connection timeout for the connection. If the default value of zero is returned then the default rescu timeout will be applied.
+   * Check the exchange code to see if this option has been implemented.
    *
    * @return the http read timeout in milliseconds
    */
-  public int getHttpReadTimeout() {
+  public int getHttpConnTimeout() {
 
-    return httpReadTimeout;
+    return httpConnTimeout;
   }
 
   /**
-   * Set the http read timeout for the connection. If not supplied the default rescu timeout will be
-   * used. Check the exchange code to see if this option has been implemented. (This value can also
-   * be set globally in "rescu.properties" by setting the property "rescu.http.readTimeoutMillis".)
+   * Set the http read timeout for the connection. If not supplied the default rescu timeout will be used. Check the exchange code to see if this
+   * option has been implemented. (This value can also be set globally in "rescu.properties" by setting the property "rescu.http.readTimeoutMillis".)
    *
    * @param milliseconds the http read timeout in milliseconds
    */
@@ -221,8 +215,28 @@ public class ExchangeSpecification {
   }
 
   /**
-   * Get the API secret key typically used in HMAC signing of requests. For MtGox this would be the
-   * "Rest-Sign" field.
+   * Get the http read timeout for the connection. If the default value of zero is returned then the default rescu timeout will be applied. Check the
+   * exchange code to see if this option has been implemented.
+   *
+   * @return the http read timeout in milliseconds
+   */
+  public int getHttpReadTimeout() {
+
+    return httpReadTimeout;
+  }
+
+  /**
+   * Set the port number of the server providing direct socket data (e.g. "1337").
+   *
+   * @param port the port number
+   */
+  public void setPort(int port) {
+
+    this.port = port;
+  }
+
+  /**
+   * Get the API secret key typically used in HMAC signing of requests. For MtGox this would be the "Rest-Sign" field.
    *
    * @return the secret key
    */
@@ -232,8 +246,7 @@ public class ExchangeSpecification {
   }
 
   /**
-   * Set the API secret key typically used in HMAC signing of requests. For MtGox this would be the
-   * "Rest-Sign" field.
+   * Set the API secret key typically used in HMAC signing of requests. For MtGox this would be the "Rest-Sign" field.
    *
    * @param secretKey the secret key
    */
@@ -243,8 +256,8 @@ public class ExchangeSpecification {
   }
 
   /**
-   * Get the URI to reach the <b>root</b> of the exchange API for SSL queries (e.g. use
-   * "https://example.com:8443/exchange", not "https://example.com:8443/exchange/api/v3/trades").
+   * Get the URI to reach the <b>root</b> of the exchange API for SSL queries (e.g. use "https://example.com:8443/exchange", not
+   * "https://example.com:8443/exchange/api/v3/trades").
    *
    * @return the SSL URI
    */
@@ -254,8 +267,8 @@ public class ExchangeSpecification {
   }
 
   /**
-   * Set the URI to reach the <b>root</b> of the exchange API for SSL queries (e.g. use
-   * "https://example.com:8443/exchange", not "https://example.com:8443/exchange/api/v3/trades").
+   * Set the URI to reach the <b>root</b> of the exchange API for SSL queries (e.g. use "https://example.com:8443/exchange", not
+   * "https://example.com:8443/exchange/api/v3/trades").
    *
    * @param uri the SSL URI
    */
@@ -265,8 +278,8 @@ public class ExchangeSpecification {
   }
 
   /**
-   * Get the URI to reach the <b>root</b> of the exchange API for plaintext (non-SSL) queries (e.g.
-   * use "http://example.com:8080/exchange", not "http://example.com:8080/exchange/api/v3/trades")
+   * Get the URI to reach the <b>root</b> of the exchange API for plaintext (non-SSL) queries (e.g. use "http://example.com:8080/exchange", not
+   * "http://example.com:8080/exchange/api/v3/trades")
    *
    * @return the plain text URI
    */
@@ -276,8 +289,8 @@ public class ExchangeSpecification {
   }
 
   /**
-   * Set the URI to reach the <b>root</b> of the exchange API for plaintext (non-SSL) queries (e.g.
-   * use "http://example.com:8080/exchange", not "http://example.com:8080/exchange/api/v3/trades")
+   * Set the URI to reach the <b>root</b> of the exchange API for plaintext (non-SSL) queries (e.g. use "http://example.com:8080/exchange", not
+   * "http://example.com:8080/exchange/api/v3/trades")
    *
    * @param plainTextUri the plain text URI
    */
@@ -307,8 +320,7 @@ public class ExchangeSpecification {
   }
 
   /**
-   * Get an item from the arbitrary exchange-specific parameters to be passed to the exchange
-   * implementation.
+   * Get an item from the arbitrary exchange-specific parameters to be passed to the exchange implementation.
    *
    * @return a Map of named exchange-specific parameter values
    */
@@ -318,8 +330,7 @@ public class ExchangeSpecification {
   }
 
   /**
-   * Set an item in the arbitrary exchange-specific parameters to be passed to the exchange
-   * implementation.
+   * Set an item in the arbitrary exchange-specific parameters to be passed to the exchange implementation.
    */
   public void setExchangeSpecificParametersItem(String key, Object value) {
 
@@ -407,11 +418,10 @@ public class ExchangeSpecification {
   }
 
   /**
-   * Get the override file for generating the {@link org.knowm.xchange.dto.meta.ExchangeMetaData}
-   * object. By default, the {@link org.knowm.xchange.dto.meta.ExchangeMetaData} object is loaded at
-   * startup from a json file on the classpath with the same name as the name of the exchange as
-   * defined in {@link ExchangeSpecification}. With this parameter, you can override that file with
-   * a file of your choice located outside of the classpath.
+   * Get the override file for generating the {@link org.knowm.xchange.dto.meta.ExchangeMetaData} object. By default, the
+   * {@link org.knowm.xchange.dto.meta.ExchangeMetaData} object is loaded at startup from a json file on the classpath with the same name as the name
+   * of the exchange as defined in {@link ExchangeSpecification}. With this parameter, you can override that file with a file of your choice located
+   * outside of the classpath.
    *
    * @return
    */
@@ -421,11 +431,10 @@ public class ExchangeSpecification {
   }
 
   /**
-   * Set the override file for generating the {@link org.knowm.xchange.dto.meta.ExchangeMetaData}
-   * object. By default, the {@link org.knowm.xchange.dto.meta.ExchangeMetaData} object is loaded at
-   * startup from a json file on the classpath with the same name as the name of the exchange as
-   * defined in {@link ExchangeSpecification}. With this parameter, you can override that file with
-   * a file of your choice located outside of the classpath.
+   * Set the override file for generating the {@link org.knowm.xchange.dto.meta.ExchangeMetaData} object. By default, the
+   * {@link org.knowm.xchange.dto.meta.ExchangeMetaData} object is loaded at startup from a json file on the classpath with the same name as the name
+   * of the exchange as defined in {@link ExchangeSpecification}. With this parameter, you can override that file with a file of your choice located
+   * outside of the classpath.
    *
    * @return
    */
@@ -445,8 +454,7 @@ public class ExchangeSpecification {
   }
 
   /**
-   * By default, some meta data from the exchange is remotely loaded (if implemented). Here you can
-   * set this default behavior.
+   * By default, some meta data from the exchange is remotely loaded (if implemented). Here you can set this default behavior.
    *
    * @param shouldLoadRemoteMetaData
    */
@@ -454,4 +462,5 @@ public class ExchangeSpecification {
 
     this.shouldLoadRemoteMetaData = shouldLoadRemoteMetaData;
   }
+
 }

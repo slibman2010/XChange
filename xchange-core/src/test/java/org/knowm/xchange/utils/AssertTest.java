@@ -4,9 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Fail.fail;
 
 import java.util.Arrays;
+
 import org.junit.Test;
 
-/** Test class for testing various Assert methods */
+/**
+ * Test class for testing various Assert methods
+ */
 public class AssertTest {
 
   @Test
@@ -20,6 +23,7 @@ public class AssertTest {
     } catch (IllegalArgumentException e) {
       assertThat(e.getMessage()).isEqualTo("null");
     }
+
   }
 
   @Test
@@ -40,6 +44,7 @@ public class AssertTest {
     } catch (IllegalArgumentException e) {
       assertThat(e.getMessage()).isEqualTo("short");
     }
+
   }
 
   @Test
@@ -60,5 +65,7 @@ public class AssertTest {
     } catch (IllegalArgumentException e) {
       assertThat(e.getMessage()).isEqualTo("short");
     }
+
   }
+
 }

@@ -2,11 +2,11 @@ package org.knowm.xchange.service.trade.params;
 
 public interface TradeHistoryParamsIdSpan extends TradeHistoryParams {
 
-  String getStartId();
-
   void setStartId(String startId);
 
-  String getEndId();
+  String getStartId();
 
   void setEndId(String endId);
+
+  String getEndId();
 }

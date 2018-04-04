@@ -1,10 +1,11 @@
 package org.knowm.xchange.exceptions;
 
 /**
+ * <p>
  * Exception to provide the following to:
- *
+ * </p>
  * <ul>
- *   <li>Indication of generic Exchange exception
+ * <li>Indication of generic Exchange exception</li>
  * </ul>
  */
 public class ExchangeException extends RuntimeException {

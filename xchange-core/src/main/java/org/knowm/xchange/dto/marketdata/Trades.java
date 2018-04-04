@@ -1,33 +1,24 @@
 package org.knowm.xchange.dto.marketdata;
 
-import static org.knowm.xchange.dto.marketdata.Trades.TradeSortType.SortByID;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/** DTO representing a collection of trades */
+/**
+ * <p>
+ * DTO representing a collection of trades
+ * </p>
+ */
 public class Trades implements Serializable {
 
   private static final TradeIDComparator TRADE_ID_COMPARATOR = new TradeIDComparator();
-  private static final TradeTimestampComparator TRADE_TIMESTAMP_COMPARATOR =
-      new TradeTimestampComparator();
+  private static final TradeTimestampComparator TRADE_TIMESTAMP_COMPARATOR = new TradeTimestampComparator();
 
   private final List<Trade> trades;
   private final long lastID;
   private final TradeSortType tradeSortType;
-
-  /**
-   * Constructor Default sort is SortByID
-   *
-   * @param trades List of trades
-   */
-  public Trades(List<Trade> trades) {
-
-    this(trades, 0L, SortByID);
-  }
 
   /**
    * Constructor
@@ -45,7 +36,6 @@ public class Trades implements Serializable {
    *
    * @param trades A list of trades
    * @param lastID Last Unique ID
-   * @param tradeSortType Trade sort type
    */
   public Trades(List<Trade> trades, long lastID, TradeSortType tradeSortType) {
 
@@ -66,13 +56,17 @@ public class Trades implements Serializable {
     }
   }
 
-  /** @return A list of trades ordered by id */
+  /**
+   * @return A list of trades ordered by id
+   */
   public List<Trade> getTrades() {
 
     return trades;
   }
 
-  /** @return a Unique ID for the fetched trades */
+  /**
+   * @return a Unique ID for the fetched trades
+   */
   public long getlastID() {
 
     return lastID;
@@ -87,17 +81,33 @@ public class Trades implements Serializable {
   public String toString() {
 
     StringBuilder sb = new StringBuilder("Trades\n");
-    sb.append("lastID= ").append(lastID).append("\n");
+    sb.append("lastID= ")
+        .append(lastID)
+        .append("\n");
 
     for (Trade trade : getTrades()) {
-      sb.append("[trade=").append(trade.toString()).append("]\n");
+      sb.append("[trade=")
+          .append(trade.toString())
+          .append("]\n");
     }
     return sb.toString();
   }
 
+  public String toStringShort() {
+
+	    StringBuilder sb = new StringBuilder("Trades:");
+	        sb.append(lastID).append("\n");
+
+	    for (Trade trade : getTrades()) {
+	    	sb.append("[")
+	          .append(trade.toString())
+	          .append("]\n");
+	    }
+	    return sb.toString();
+	  }
+  
   public enum TradeSortType {
-    SortByTimestamp,
-    SortByID
+    SortByTimestamp, SortByID
   }
 
   public static class TradeTimestampComparator implements Comparator<Trade> {
@@ -117,4 +127,5 @@ public class Trades implements Serializable {
       return trade1.getId().compareTo(trade2.getId());
     }
   }
+
 }

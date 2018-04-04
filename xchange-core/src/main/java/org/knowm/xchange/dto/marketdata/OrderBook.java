@@ -2,107 +2,73 @@ package org.knowm.xchange.dto.marketdata;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*;
+
+
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.Order.OrderType;
 import org.knowm.xchange.dto.trade.LimitOrder;
 
-/** DTO representing the exchange order book */
+/**
+ * DTO representing the exchange order book
+ */
 public final class OrderBook implements Serializable {
 
-  /** the asks */
-  private final List<LimitOrder> asks;
-  /** the bids */
-  private final List<LimitOrder> bids;
-  /** the timestamp of the orderbook according to the exchange's server, null if not provided */
+  private String currencyPair;
+  /**
+   * the timestamp of the orderbook according to the exchange's server, null if not provided
+   */
   private Date timeStamp;
+  //Format date till miliseconds
+
+  /**
+   * the asks
+   */
+  private final List<LimitOrder> asks;
+
+  /**
+   * the bids
+   */
+  private final List<LimitOrder> bids;
+/**
+ ** We need the exchange ID per Book to separate books from different exchanges
+  **/
+  private int exchangeID;
+
 
   /**
    * Constructor
    *
-   * @param timeStamp - the timestamp of the orderbook according to the exchange's server, null if
-   *     not provided
+   * @param timeStamp - the timestamp of the orderbook according to the exchange's server, //if not provided replaced by machine time
    * @param asks The ASK orders
    * @param bids The BID orders
    */
   public OrderBook(Date timeStamp, List<LimitOrder> asks, List<LimitOrder> bids) {
+    currencyPair ="";
+    if(timeStamp!= null)
+		  this.timeStamp = timeStamp;
+	  else
+		  this.timeStamp = new Date();
+    this.asks = asks;
+    this.bids = bids;
+    exchangeID = 0;
 
-    this(timeStamp, asks, bids, false);
   }
 
-  /**
-   * Constructor
-   *
-   * @param timeStamp - the timestamp of the orderbook according to the exchange's server, null if
-   *     not provided
-   * @param asks The ASK orders
-   * @param bids The BID orders
-   * @param sort True if the asks and bids need to be sorted
-   */
-  public OrderBook(Date timeStamp, List<LimitOrder> asks, List<LimitOrder> bids, boolean sort) {
-
-    this.timeStamp = timeStamp;
-    if (sort) {
-      this.asks = new ArrayList<>(asks);
-      this.bids = new ArrayList<>(bids);
-      Collections.sort(this.asks);
-      Collections.sort(this.bids);
-    } else {
-      this.asks = asks;
-      this.bids = bids;
-    }
+  public OrderBook(){
+    currencyPair ="";
+    timeStamp = new Date();
+    asks = new LinkedList<LimitOrder>();
+    bids = new LinkedList<LimitOrder>();
   }
-
-  /**
-   * Constructor
-   *
-   * @param timeStamp - the timestamp of the orderbook according to the exchange's server, null if
-   *     not provided
-   * @param asks The ASK orders
-   * @param bids The BID orders
-   */
-  public OrderBook(Date timeStamp, Stream<LimitOrder> asks, Stream<LimitOrder> bids) {
-
-    this(timeStamp, asks, bids, false);
+  public String getCurrencyPair(){
+    return currencyPair;
   }
-
-  /**
-   * Constructor
-   *
-   * @param timeStamp - the timestamp of the orderbook according to the exchange's server, null if
-   *     not provided
-   * @param asks The ASK orders
-   * @param bids The BID orders
-   * @param sort True if the asks and bids need to be sorted
-   */
-  public OrderBook(Date timeStamp, Stream<LimitOrder> asks, Stream<LimitOrder> bids, boolean sort) {
-
-    this.timeStamp = timeStamp;
-    if (sort) {
-      this.asks = asks.sorted().collect(Collectors.toList());
-      this.bids = bids.sorted().collect(Collectors.toList());
-    } else {
-      this.asks = asks.collect(Collectors.toList());
-      this.bids = bids.collect(Collectors.toList());
-    }
+  public void setCurrencyPair(String currencyPair){
+    this.currencyPair =currencyPair;
   }
-
-  // Returns a copy of limitOrder with tradeableAmount replaced.
-  private static LimitOrder withAmount(LimitOrder limitOrder, BigDecimal tradeableAmount) {
-
-    OrderType type = limitOrder.getType();
-    CurrencyPair currencyPair = limitOrder.getCurrencyPair();
-    String id = limitOrder.getId();
-    Date date = limitOrder.getTimestamp();
-    BigDecimal limit = limitOrder.getLimitPrice();
-    return new LimitOrder(type, tradeableAmount, currencyPair, id, date, limit);
-  }
-
   public Date getTimeStamp() {
 
     return timeStamp;
@@ -124,9 +90,8 @@ public final class OrderBook implements Serializable {
   }
 
   /**
-   * Given a new LimitOrder, it will replace a matching limit order in the orderbook if one is
-   * found, or add the new LimitOrder if one is not. timeStamp will be updated if the new timestamp
-   * is non-null and in the future.
+   * Given a new LimitOrder, it will replace a matching limit order in the orderbook if one is found, or add the new LimitOrder if one is not.
+   * timeStamp will be updated if the new timestamp is non-null and in the future.
    *
    * @param limitOrder the new LimitOrder
    */
@@ -137,21 +102,20 @@ public final class OrderBook implements Serializable {
   }
 
   // Replace the amount for limitOrder's price in the provided list.
-  private void update(List<LimitOrder> asks, LimitOrder limitOrder) {
+  private void update(List<LimitOrder> tests, LimitOrder limitOrder) {
 
-    int idx = Collections.binarySearch(asks, limitOrder);
+    int idx = Collections.binarySearch(tests, limitOrder);
     if (idx >= 0) {
-      asks.remove(idx);
-      asks.add(idx, limitOrder);
+    	tests.remove(idx);
+    	tests.add(idx, limitOrder);
     } else {
-      asks.add(-idx - 1, limitOrder);
+    	tests.add(-idx - 1, limitOrder);
     }
   }
 
   /**
-   * Given an OrderBookUpdate, it will replace a matching limit order in the orderbook if one is
-   * found, or add a new if one is not. timeStamp will be updated if the new timestamp is non-null
-   * and in the future.
+   * Given an OrderBookUpdate, it will replace a matching limit order in the orderbook if one is found, or add a new if one is not. timeStamp will be
+   * updated if the new timestamp is non-null and in the future.
    *
    * @param orderBookUpdate the new OrderBookUpdate
    */
@@ -174,12 +138,25 @@ public final class OrderBook implements Serializable {
     updateDate(limitOrder.getTimestamp());
   }
 
+  // Returns a copy of limitOrder with tradeableAmount replaced.
+  private static LimitOrder withAmount(LimitOrder limitOrder, BigDecimal tradeableAmount) {
+
+    OrderType type = limitOrder.getType();
+    CurrencyPair currencyPair = limitOrder.getCurrencyPair();
+    String id = limitOrder.getId();
+    Date date = limitOrder.getTimestamp();
+    BigDecimal limit = limitOrder.getLimitPrice();
+    return new LimitOrder(type, tradeableAmount, currencyPair, id, date, limit);
+  }
+
   // Replace timeStamp if the provided date is non-null and in the future
   // TODO should this raise an exception if the order timestamp is in the past?
   private void updateDate(Date updateDate) {
 
     if (updateDate != null && (timeStamp == null || updateDate.after(timeStamp))) {
       this.timeStamp = updateDate;
+    }else {
+    	updateDate =new Date();
     }
   }
 
@@ -207,9 +184,7 @@ public final class OrderBook implements Serializable {
       return false;
     }
     final OrderBook other = (OrderBook) obj;
-    if (this.timeStamp == null
-        ? other.timeStamp != null
-        : !this.timeStamp.equals(other.timeStamp)) {
+    if (this.timeStamp == null ? other.timeStamp != null : !this.timeStamp.equals(other.timeStamp)) {
       return false;
     }
     if (this.bids.size() != other.bids.size()) {
@@ -232,10 +207,9 @@ public final class OrderBook implements Serializable {
   }
 
   /**
-   * Identical to {@link #equals(Object) equals} method except that this ignores different
-   * timestamps. In other words, this version of equals returns true if the order internal to the
-   * OrderBooks are equal but their timestamps are unequal. It returns false if false if any order
-   * between the two are different.
+   * Identical to {@link #equals(Object) equals} method except that this ignores different timestamps. In other words, this version of equals returns
+   * true if the order internal to the OrderBooks are equal but their timestamps are unequal. It returns false if false if any order between the two
+   * are different.
    *
    * @param ob
    * @return
@@ -254,12 +228,45 @@ public final class OrderBook implements Serializable {
   @Override
   public String toString() {
 
-    return "OrderBook [timestamp: "
-        + timeStamp
-        + ", asks="
-        + asks.toString()
-        + ", bids="
-        + bids.toString()
-        + "]";
+    return "OrderBook [timestamp: " + timeStamp + ", asks=" + asks.toString() + ", bids=" + bids.toString() + "]";
   }
+  public String toStringShort() {
+    int count =0;
+	StringBuilder builder = new StringBuilder();
+    builder.append("[ "+timeStamp.getTime() + ","+String.valueOf(exchangeID)+","+this.currencyPair);
+    builder.append(", BID, ");
+	  for (LimitOrder  order: bids) {
+		  builder.append(order.toStringShort());
+      ++count;
+      if(count > 10)
+        break;
+	  }
+    count =0;
+    builder.append(" ASK,");
+	  for (LimitOrder  order: asks) {
+		  builder.append(order.toStringShort());
+       ++count;
+      if(count > 10)
+        break;
+	  }
+	   builder.append("]").append(System.getProperty("line.separator"));
+	   return builder.toString();
+    }
+    public int getExchangeID() {
+	return exchangeID;
+}
+
+public void setExchangeID(int exchangeID) {
+	this.exchangeID = exchangeID;
+}
+
+	public void set(OrderBook book){
+      this.currencyPair = book.getCurrencyPair();
+      this.timeStamp = book.getTimeStamp();
+      this.exchangeID = book.getExchangeID();
+      this.bids.clear();
+      this.bids.addAll(book.getBids());
+      this.asks.clear();
+      this.asks.addAll(book.getAsks());
+    }
 }

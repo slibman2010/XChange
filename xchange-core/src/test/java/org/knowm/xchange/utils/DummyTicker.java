@@ -1,6 +1,8 @@
 package org.knowm.xchange.utils;
 
-/** A mutable Ticker class used for HttpTemplate testing. */
+/**
+ * A mutable Ticker class used for HttpTemplate testing.
+ */
 public class DummyTicker {
 
   long last;
@@ -25,4 +27,5 @@ public class DummyTicker {
 
     this.volume = volume;
   }
+
 }

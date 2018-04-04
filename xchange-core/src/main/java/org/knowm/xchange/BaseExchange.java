@@ -1,6 +1,5 @@
 package org.knowm.xchange;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,6 +7,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.io.IOUtils;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.meta.ExchangeMetaData;
@@ -19,16 +19,20 @@ import org.knowm.xchange.service.trade.TradeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public abstract class BaseExchange implements Exchange {
 
+  protected abstract void initServices();
+
   protected final Logger logger = LoggerFactory.getLogger(getClass());
+
   protected ExchangeSpecification exchangeSpecification;
   protected ExchangeMetaData exchangeMetaData;
+
   protected MarketDataService marketDataService;
   protected TradeService tradeService;
   protected AccountService accountService;
-
-  protected abstract void initServices();
 
   @Override
   public void applySpecification(ExchangeSpecification exchangeSpecification) {
@@ -57,15 +61,12 @@ public abstract class BaseExchange implements Exchange {
         exchangeSpecification.setPlainTextUri(defaultSpecification.getPlainTextUri());
       }
       if (exchangeSpecification.getExchangeSpecificParameters() == null) {
-        exchangeSpecification.setExchangeSpecificParameters(
-            defaultSpecification.getExchangeSpecificParameters());
+        exchangeSpecification.setExchangeSpecificParameters(defaultSpecification.getExchangeSpecificParameters());
       } else {
         // add default value unless it is overridden by current spec
-        for (Map.Entry<String, Object> entry :
-            defaultSpecification.getExchangeSpecificParameters().entrySet()) {
+        for (Map.Entry<String, Object> entry : defaultSpecification.getExchangeSpecificParameters().entrySet()) {
           if (exchangeSpecification.getExchangeSpecificParametersItem(entry.getKey()) == null) {
-            exchangeSpecification.setExchangeSpecificParametersItem(
-                entry.getKey(), entry.getValue());
+            exchangeSpecification.setExchangeSpecificParametersItem(entry.getKey(), entry.getValue());
           }
         }
       }
@@ -73,8 +74,7 @@ public abstract class BaseExchange implements Exchange {
       this.exchangeSpecification = exchangeSpecification;
     }
 
-    if (this.exchangeSpecification.getMetaDataJsonFileOverride()
-        != null) { // load the metadata from the file system
+    if (this.exchangeSpecification.getMetaDataJsonFileOverride() != null) { // load the metadata from the file system
 
       InputStream is = null;
       try {
@@ -88,15 +88,11 @@ public abstract class BaseExchange implements Exchange {
         IOUtils.closeQuietly(is);
       }
 
-    } else if (this.exchangeSpecification.getExchangeName()
-        != null) { // load the metadata from the classpath
+    } else if (this.exchangeSpecification.getExchangeName() != null) { // load the metadata from the classpath
 
       InputStream is = null;
       try {
-        is =
-            BaseExchangeService.class
-                .getClassLoader()
-                .getResourceAsStream(getMetaDataFileName(exchangeSpecification) + ".json");
+        is = BaseExchangeService.class.getClassLoader().getResourceAsStream(getMetaDataFileName(exchangeSpecification) + ".json");
         loadExchangeMetaData(is);
       } finally {
         IOUtils.closeQuietly(is);
@@ -157,12 +153,7 @@ public abstract class BaseExchange implements Exchange {
 
   public String getMetaDataFileName(ExchangeSpecification exchangeSpecification) {
 
-    return exchangeSpecification
-        .getExchangeName()
-        .toLowerCase()
-        .replace(" ", "")
-        .replace("-", "")
-        .replace(".", "");
+    return exchangeSpecification.getExchangeName().toLowerCase().replace(" ", "").replace("-", "").replace(".", "");
   }
 
   @Override
@@ -195,10 +186,7 @@ public abstract class BaseExchange implements Exchange {
   @Override
   public String toString() {
 
-    String name =
-        exchangeSpecification != null
-            ? exchangeSpecification.getExchangeName()
-            : getClass().getName();
+    String name = exchangeSpecification != null ? exchangeSpecification.getExchangeName() : getClass().getName();
     return name + "#" + hashCode();
   }
 }

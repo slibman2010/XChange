@@ -7,7 +7,6 @@ public interface TradeHistoryParamsSorted extends TradeHistoryParams {
   void setOrder(Order order);
 
   enum Order {
-    asc,
-    desc
+    asc, desc
   }
 }

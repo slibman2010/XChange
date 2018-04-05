@@ -3,6 +3,7 @@ package org.knowm.xchange.utils;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -26,4 +27,5 @@ public class HmacDigest {
     byte[] bytes = mac.doFinal(message.getBytes(utf8));
     return DigestUtils.bytesToHex(bytes);
   }
+
 }

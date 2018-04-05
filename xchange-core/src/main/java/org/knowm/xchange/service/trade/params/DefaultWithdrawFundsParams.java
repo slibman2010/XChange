@@ -1,7 +1,9 @@
 package org.knowm.xchange.service.trade.params;
 
 import java.math.BigDecimal;
+
 import javax.annotation.Nullable;
+
 import org.knowm.xchange.currency.Currency;
 
 public class DefaultWithdrawFundsParams implements WithdrawFundsParams {
@@ -11,14 +13,14 @@ public class DefaultWithdrawFundsParams implements WithdrawFundsParams {
 
   public final BigDecimal amount;
 
-  @Nullable public final BigDecimal commission;
+  @Nullable
+  public final BigDecimal commission;
 
   public DefaultWithdrawFundsParams(String address, Currency currency, BigDecimal amount) {
     this(address, currency, amount, null);
   }
 
-  public DefaultWithdrawFundsParams(
-      String address, Currency currency, BigDecimal amount, BigDecimal commission) {
+  public DefaultWithdrawFundsParams(String address, Currency currency, BigDecimal amount, BigDecimal commission) {
     this.address = address;
     this.currency = currency;
     this.amount = amount;
@@ -44,16 +46,7 @@ public class DefaultWithdrawFundsParams implements WithdrawFundsParams {
 
   @Override
   public String toString() {
-    return "DefaultWithdrawFundsParams{"
-        + "address='"
-        + getAddress()
-        + '\''
-        + ", currency="
-        + getCurrency()
-        + ", amount="
-        + getAmount()
-        + ", commission="
-        + getCommission()
-        + '}';
+    return "DefaultWithdrawFundsParams{" + "address='" + getAddress() + '\'' + ", currency=" + getCurrency() + ", amount=" + getAmount() + ", commission="
+        + getCommission() + '}';
   }
 }

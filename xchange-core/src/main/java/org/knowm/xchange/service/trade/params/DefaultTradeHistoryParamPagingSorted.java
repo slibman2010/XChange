@@ -1,7 +1,6 @@
 package org.knowm.xchange.service.trade.params;
 
-public class DefaultTradeHistoryParamPagingSorted extends DefaultTradeHistoryParamPaging
-    implements TradeHistoryParamsSorted {
+public class DefaultTradeHistoryParamPagingSorted extends DefaultTradeHistoryParamPaging implements TradeHistoryParamsSorted {
 
   private Order order = Order.asc;
 

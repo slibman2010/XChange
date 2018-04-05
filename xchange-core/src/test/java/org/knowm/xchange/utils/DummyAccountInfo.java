@@ -1,6 +1,8 @@
 package org.knowm.xchange.utils;
 
-/** A mutable AccountInfo class used for HttpTemplate testing. */
+/**
+ * A mutable AccountInfo class used for HttpTemplate testing.
+ */
 public class DummyAccountInfo {
 
   String username;
@@ -36,4 +38,5 @@ public class DummyAccountInfo {
 
     this.amount_int = amount_int;
   }
+
 }

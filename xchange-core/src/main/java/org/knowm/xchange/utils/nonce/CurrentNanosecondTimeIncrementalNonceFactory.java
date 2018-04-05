@@ -2,8 +2,7 @@ package org.knowm.xchange.utils.nonce;
 
 import si.mazi.rescu.SynchronizedValueFactory;
 
-public class CurrentNanosecondTimeIncrementalNonceFactory
-    implements SynchronizedValueFactory<Long> {
+public class CurrentNanosecondTimeIncrementalNonceFactory implements SynchronizedValueFactory<Long> {
 
   private long lastNonce = 0L;
 
@@ -19,5 +18,6 @@ public class CurrentNanosecondTimeIncrementalNonceFactory
     lastNonce = newNonce;
 
     return newNonce;
+
   }
 }

@@ -1,6 +1,8 @@
 package org.knowm.xchange.exceptions;
 
-/** An exception indicating there are not enough funds for the action requested */
+/**
+ * An exception indicating there are not enough funds for the action requested
+ */
 public class FundsExceededException extends ExchangeException {
 
   public FundsExceededException(String message) {
@@ -18,4 +20,5 @@ public class FundsExceededException extends ExchangeException {
   public FundsExceededException() {
     super("Not enough funds are available.");
   }
+
 }
